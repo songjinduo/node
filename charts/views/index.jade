@@ -1,0 +1,291 @@
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no')
+        title charts
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        .container-fluid
+            #lineMain.col-lg-8.col-sm-12.col-xs-12(style='height:400px;')
+            #barMain.col-lg-8.col-sm-12.col-xs-12(style='height:400px')
+        script(src='//cdn.bootcss.com/jquery/3.1.1/jquery.js')
+        // 引入 echarts.js
+        script(src='javascripts/echarts.js')
+        script(type='text/javascript').
+            var data_s, data0;
+            // 基于准备好的dom，初始化echarts实例     :: K线图
+            var myLineChart = echarts.init(document.getElementById('lineMain'));
+            //   :: 推荐图
+            var myBarChart = echarts.init(document.getElementById('barMain'));
+            function splitData(rawData) {
+                var categoryData = [];
+                var values = [];
+                for (var i = 0; i < rawData.length; i++) {
+                    categoryData.push(rawData[i].splice(0, 1)[0]);
+                    values.push(rawData[i])
+                }
+                return {
+                    categoryData: categoryData,
+                    values: values
+                };
+            }
+            function calculateMA(dayCount) {
+                var result = [];
+                for (var i = 0, len = data0.values.length; i < len; i++) {
+                    if (i < dayCount) {
+                        result.push('-');
+                        continue;
+                    }
+                    var sum = 0;
+                    for (var j = 0; j < dayCount; j++) {
+                        sum += data0.values[i - j][1];
+                    }
+                    result.push(sum / dayCount);
+                }
+                return result;
+            }
+            $.get('price.json').done(function (data) {
+                data_s = data;
+                data0 = splitData(data_s);
+
+                option = {
+                    title: {
+                        text: '黄金价格',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'line'
+                        }
+                    },
+                    legend: {
+                        data: ['日K', 'MA5', 'MA10', 'MA20', 'MA30'],
+                        top: 25
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: data0.categoryData,
+                        scale: true,
+                        boundaryGap: false,
+                        axisLine: {onZero: false},
+                        splitLine: {show: false},
+                        splitNumber: 20,
+                        min: 'dataMin',
+                        max: 'dataMax'
+                    },
+                    yAxis: {
+                        scale: true,
+                        splitArea: {
+                            show: true
+                        }
+                    },
+                    dataZoom: [
+                        {
+                            type: 'inside',
+                            start: 50,
+                            end: 100
+                        },
+                        {
+                            show: true,
+                            type: 'slider',
+                            y: '90%',
+                            start: 50,
+                            end: 100
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '日K',
+                            type: 'candlestick',
+                            data: data0.values,
+                            markPoint: {
+                                label: {
+                                    normal: {
+                                        formatter: function (param) {
+                                            return param != null ? Math.round(param.value) : '';
+                                        }
+                                    }
+                                },
+                                data: [
+                                    {
+                                        name: 'XX标点',
+                                        coord: ['2013/5/31', 2300],
+                                        value: 2300,
+                                        itemStyle: {
+                                            normal: {color: 'rgb(41,60,85)'}
+                                        }
+                                    },
+                                    {
+                                        name: 'highest value',
+                                        type: 'max',
+                                        valueDim: 'highest'
+                                    },
+                                    {
+                                        name: 'lowest value',
+                                        type: 'min',
+                                        valueDim: 'lowest'
+                                    },
+                                    {
+                                        name: 'average value on close',
+                                        type: 'average',
+                                        valueDim: 'close'
+                                    }
+                                ],
+                                tooltip: {
+                                    formatter: function (param) {
+                                        return param.name + '<br>' + (param.data.coord || '');
+                                    }
+                                }
+                            },
+                            markLine: {
+                                symbol: ['none', 'none'],
+                                data: [
+                                    [
+                                        {
+                                            name: 'from lowest to highest',
+                                            type: 'min',
+                                            valueDim: 'lowest',
+                                            symbol: 'circle',
+                                            symbolSize: 10,
+                                            label: {
+                                                normal: {show: false},
+                                                emphasis: {show: false}
+                                            }
+                                        },
+                                        {
+                                            type: 'max',
+                                            valueDim: 'highest',
+                                            symbol: 'circle',
+                                            symbolSize: 10,
+                                            label: {
+                                                normal: {show: false},
+                                                emphasis: {show: false}
+                                            }
+                                        }
+                                    ],
+                                    {
+                                        name: 'min line on close',
+                                        type: 'min',
+                                        valueDim: 'close'
+                                    },
+                                    {
+                                        name: 'max line on close',
+                                        type: 'max',
+                                        valueDim: 'close'
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            name: 'MA5',
+                            type: 'line',
+                            data: calculateMA(5),
+                            smooth: true,
+                            lineStyle: {
+                                normal: {opacity: 0.5}
+                            }
+                        },
+                        {
+                            name: 'MA10',
+                            type: 'line',
+                            data: calculateMA(10),
+                            smooth: true,
+                            lineStyle: {
+                                normal: {opacity: 0.5}
+                            }
+                        },
+                        {
+                            name: 'MA20',
+                            type: 'line',
+                            data: calculateMA(20),
+                            smooth: true,
+                            lineStyle: {
+                                normal: {opacity: 0.5}
+                            }
+                        },
+                        {
+                            name: 'MA30',
+                            type: 'line',
+                            data: calculateMA(30),
+                            smooth: true,
+                            lineStyle: {
+                                normal: {opacity: 0.5}
+                            }
+                        }
+
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myLineChart.setOption(option, true); //当setOption第二个参数为true时，会阻止数据合
+            }).done(function () {
+                $.get('buy.json').done(function (data) {
+                    var xAxisData = [];
+                    var data1 = [];
+                    var data2 = [];
+                    for (var i = 0; i < data.length; i++) {
+                        xAxisData.push(data0.categoryData[i]);
+                        data1.push(data[i][0]);
+                        data2.push(data[i][1] * (-1));
+                    }
+
+                    option2 = {
+                        title: {
+                            text: '买卖指数',
+                            left: 'center'
+                        },
+                        legend: {
+                            data: ['买入', '卖出'],
+                            top: 25
+                        },
+                        tooltip: {},
+                        xAxis: {
+                            data: xAxisData,
+                            silent: false,
+                            splitLine: {
+                                show: false
+                            }
+                        },
+                        yAxis: {},
+                        dataZoom: [
+                            {
+                                type: 'inside',
+                                start: 50,
+                                end: 100
+                            },
+                            {
+                                show: true,
+                                type: 'slider',
+                                y: '90%',
+                                start: 50,
+                                end: 100
+                            }
+                        ],
+                        series: [{
+                            name: '买入',
+                            type: 'bar',
+                            data: data1,
+                            animationDelay: function (idx) {
+                                return idx * 10;
+                            }
+                        }, {
+                            name: '卖出',
+                            type: 'bar',
+                            data: data2,
+                            animationDelay: function (idx) {
+                                return idx * 10 + 100;
+                            }
+                        }],
+                        animationEasing: 'elasticOut',
+                        animationDelayUpdate: function (idx) {
+                            return idx * 5;
+                        }
+                    };
+                    myBarChart.setOption(option2, true);
+                })
+            });
+
+

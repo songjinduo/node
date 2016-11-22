@@ -1,0 +1,22 @@
+extends layout
+block style
+    style.
+        body{
+            background-color: #4998e6;
+        }
+        img {
+            width: 50%;
+            margin-top: 20vh;
+            margin-left: 25%;
+        }
+        h2 {
+            text-align: center;
+            color: #fff;
+        }
+block content
+    img(src='images/kefu.png', alt='')
+    h2
+        | 敬请期待
+    .weui_btn_area
+        a#button.weui_btn.weui_btn_primary(href='') 关闭
+

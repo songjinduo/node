@@ -1,0 +1,39 @@
+extends layout
+block style
+    style.
+        body {
+            font-family: "黑体";
+            background: #FBF9FE;
+        }
+        li {
+            list-style: none;
+            color: #888889;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            margin-top: 20px;
+        }
+        .out {
+            width: 300px;
+            float: left;
+            margin-left: 10px;
+        }
+block content
+        h3 用户信息
+        each val, key in aData
+            div.out
+                li 账户: #{val.account}
+                li 城市: #{val.city}
+                li 车牌: #{val.carNumber}
+                li 类型:
+                    for bby in val.hobby
+                        #{bby}
+                for image in val.images
+                    - var path = image.split("\\")[2]
+                    img(src = 'images/#{path}')
+                hr
+        #wrap.out
+
+

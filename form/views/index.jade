@@ -1,0 +1,54 @@
+extends layout
+block style
+    style.
+        body{
+            background: #efeff4;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+block script
+    script.
+        function validate_required(field,alerttxt)
+        {
+            with (field)
+            {
+                if (value==null||value=="")
+                {alert(alerttxt);return false}
+                else {return true}
+            }
+        }
+        function validate_form(thisform)
+        {
+            with (thisform)
+            {
+                if (validate_required(account,"请输入手机号!")==false)
+                {account.focus();return false}
+                if (validate_required(city,"请输入城市名!")==false)
+                {city.focus();return false}
+                if (validate_required(carNumber,"请输入车牌号!")==false)
+                {carNumber.focus();return false}
+            }
+        }
+block content
+    h1 填写专车信息
+    form(action='/', method='post', enctype='multipart/form-data')
+        .weui_cells.weui_cells_form
+            .weui_cell
+                .weui_cell_hd
+                    label.weui_label 关联账户:
+                .weui_cell_bd.weui_cell_primary
+                    input.weui_input(name='account', type='text', placeholder='请在此输入账户名', required='')
+            .weui_cell
+                .weui_cell_hd
+                    label.weui_label 所在城市:
+                .weui_cell_bd.weui_cell_primary
+                    input.weui_input(name='city', type='text', placeholder='请在此输入城市', required='')
+            .weui_cell
+                .weui_cell_hd
+                    label.weui_label 车 牌 号:
+                .weui_cell_bd.weui_cell_primary
+                    input.weui_input(name='carNumber', type='text', placeholder='请在此输入车牌号', required='')
+        .weui_btn_area
+            input#button.weui_btn.weui_btn_primary(type='submit', value='下一步')

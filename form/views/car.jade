@@ -1,0 +1,83 @@
+extends layout
+block style
+    style.
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background: #efeff4;
+        }
+        .weui_cells {
+            margin-top: 50px;
+        }
+        .weui_cell_primary {
+            font-size: 1.5em;
+        }
+block script
+    script.
+        $(function(){
+            $('#button').on('click', function(){
+                var data = $('form').serialize();
+                var content = JSON.stringify(data).replace(/"/gi, '').replace(/&/gi, '<br>');
+                $.weui.alert(content);
+                $.post('/api/v1/user', data).error(function(err){
+                    console.log(err);
+                });
+            });
+        });
+        //        document.body.setAttribute('ontouchstart', '');
+        // android
+        //document.title = "WeUI表单序列化示例";
+        // iOS
+        if (typeof WeixinJSBridge == "object" && typeof WeixinJSBridge.invoke == "function") {
+            callback();
+        } else {
+            if (document.addEventListener) {
+                document.addEventListener("WeixinJSBridgeReady", callback, false);
+            } else if (document.attachEvent) {
+                document.attachEvent("WeixinJSBridgeReady", callback);
+                document.attachEvent("onWeixinJSBridgeReady", callback);
+            }
+        }
+        function callback(){
+            WeixinJSBridge.invoke('setPageTitle', {title: '测试测试测试'}, function(res){
+                $.weui.alert(res.err_msg);
+            });
+        }
+block content
+    form(action="car" method="post" enctype="multipart/form-data")
+        .weui_cells.weui_cells_checkbox
+            label.weui_cell.weui_check_label(for='s11')
+                .weui_cell_hd
+                    input#s11.weui_check(type='checkbox', value='滴滴', name='hobby', checked='checked')
+                    i.weui_icon_checked
+                .weui_cell_bd.weui_cell_primary
+                    p 滴滴专车
+            label.weui_cell.weui_check_label(for='s12')
+                .weui_cell_hd
+                    input#s12.weui_check(type='checkbox', value='优步', name='hobby')
+                    i.weui_icon_checked
+                .weui_cell_bd.weui_cell_primary
+                    p 优步专车
+            label.weui_cell.weui_check_label(for='s13')
+                .weui_cell_hd
+                    input#s13.weui_check(type='checkbox', value='易道', name='hobby')
+                    i.weui_icon_checked
+                .weui_cell_bd.weui_cell_primary
+                    p 易到专车
+            label.weui_cell.weui_check_label(for='s14')
+                .weui_cell_hd
+                    input#s14.weui_check(type='checkbox', value='神州', name='hobby')
+                    i.weui_icon_checked
+                .weui_cell_bd.weui_cell_primary
+                    p 神州专车
+            label.weui_cell.weui_check_label(for='s15')
+                .weui_cell_hd
+                    input#s15.weui_check(type='checkbox', value='其他', name='hobby')
+                    i.weui_icon_checked
+                .weui_cell_bd.weui_cell_primary
+                    p 其       他
+        .weui_btn_area
+            input#button.weui_btn.weui_btn_primary(type='submit', value='下一步')
+
