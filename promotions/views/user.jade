@@ -1,0 +1,35 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport', content='width=device-width,\
+    initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no')
+        title 车主社群后台
+        style.
+            body {
+                font-family: "黑体";
+                background: #FBF9FE;
+            }
+            li {
+                list-style: none;
+                color: #888889;
+            }
+
+            img {
+                width: 100px;
+                height: 100px;
+                margin-top: 20px;
+            }
+            .out {
+                width: 300px;
+                float: left;
+                margin-right: 10px;
+            }
+
+    body
+        h3 用户信息
+        each val, key in aData
+            div.out
+                li 手机: #{val.phone}
+        #wrap.out
+

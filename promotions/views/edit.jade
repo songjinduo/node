@@ -1,0 +1,61 @@
+doctype html
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no')
+        title
+        link(rel='stylesheet', href='https://cdn.bootcss.com/weui/0.4.2/style/weui.css')
+        style.
+            body {
+                background-color: #efeff4;
+            }
+    body
+        form(action='edit' method='post' enctype='multipart/form-data')
+            span 请选择地区：
+            select#place(name='place')
+                option(value='qingdao') 青岛
+                option(value='henan') 河南
+                option(value='changde') 常德
+                option(value='beijing') 北京
+                option(value='chengdu') 成都
+                option(value='guangzhou') 广州
+                option(value='shijiazhuang') 石家庄
+            br
+            .weui_cells_title 活动详情
+                .weui_cells.weui_cells_form
+                    .weui_cell
+                        .weui_cell_hd
+                            label.weui_label 活动名称
+                        .weui_cell_bd.weui_cell_primary
+                            input.weui_input(name='title', type='text')
+                    .weui_cell
+                        .weui_cell_hd
+                            label.weui_label 1.
+                        .weui_cell_bd.weui_cell_primary
+                            input.weui_input(name='1.', type='text')
+                    .weui_cell
+                        .weui_cell_hd
+                            label.weui_label 2.
+                        .weui_cell_bd.weui_cell_primary
+                            input.weui_input(name='2.', type='text')
+                    .weui_cell
+                        .weui_cell_hd
+                            label.weui_label 3.
+                        .weui_cell_bd.weui_cell_primary
+                            input.weui_input(name='3.', type='text')
+                    .weui_cell
+                        .weui_cell_hd
+                            label.weui_label 4.
+                        .weui_cell_bd.weui_cell_primary
+                            input.weui_input(name='4.', type='text')
+                    .weui_cell
+                        .weui_cell_hd
+                            label.weui_label 5.
+                        .weui_cell_bd.weui_cell_primary
+                            input.weui_input(name='5.', type='text')
+                .weui_cells_tips
+                .weui_btn_area
+                    input.weui_btn.weui_btn_primary(type='submit', value='提交')
+
+
+

@@ -1,0 +1,11 @@
+extends layout
+block link
+    link(rel='stylesheet', href='/stylesheets/step4.css')
+block content
+    img.erweima(src=image, alt='')
+    .blackboard
+        img.active(src='/images/blackboard.png', alt='')
+        p
+            for tip in content
+                | #{tip}
+                br

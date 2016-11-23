@@ -1,0 +1,58 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background: #f6f7f7;
+}
+.wrap {
+    width: 90%;
+    margin: 20px auto;
+}
+.apply {
+    font-size: .8em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.apply span:nth-child(1) {
+    color: #d6000f;
+}
+p {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 50px;
+    color: #3e3a39;
+}
+.car {
+    margin: 20px 5%;
+    padding: 5px;
+    width: 90%;
+    border: 1px solid #ccc;
+}
+.activity{
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.activity span {
+    display: inline-block;
+    border: 2px solid #3e3a39;
+    padding: 5px;
+    border-radius: 5px;
+}
+button {
+    width: 90%;
+    text-align: center;
+    margin-top: 50px;
+    margin-left: 5%;
+    padding: 10px 0;
+    background: #d6000f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
