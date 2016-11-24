@@ -1,0 +1,44 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    title 订单查询
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    .container
+      h1 油卡订单查询
+      form(action='index', method='post', enctype='multipart/form-data')
+        label(for='')
+          | 按时间查询：开始时间:
+          input(type='date', name='start', value=start)
+        label(for='')
+          | 结束时间:
+          input(type='date', name='end', value=end)
+        label(for='')
+          | 按手机号查询:
+          input(type='number', name='telephone' value=telephone)
+        input.btn.btn-info(name='time', type='submit', value='查询')
+      table.table.table-bordered
+        tr
+          td 手机号
+          td 订单号
+          td 油卡号
+          td 用户ID
+          td 设备号
+          td 油站
+          td 失败原因
+          td 兑换里程
+          td 充值金额
+          td 订单状态
+          td 创建时间
+          td 充值卡号
+
+          - if (dd)
+            for dingdan in dd
+              tr
+                for value, key in dingdan
+                  if key !== 'id'
+                    td #{value}
