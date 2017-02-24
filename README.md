@@ -10,6 +10,6 @@
 
 **telephone**是使用node读取本地文件的手机号码通过聚合数据接口查询号码归属地然后写到本地文件  
 
-**react-blog**是想用react写一个博客页面，未完
+**react-blog**是想用webpack+node+react写一个博客页面，未完
 
-**react-tab**是node+react写一个tab组件
+**react-tab**是webpack+node+react写一个tab组件
