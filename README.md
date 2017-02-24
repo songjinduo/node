@@ -1,4 +1,4 @@
-# 一些基于node express jade webpack react mysql mongondb的小项目
+## 一些基于node express jade webpack react mysql mongondb的小项目
 
 **charts**是[node+express+jade+echarts+mysql实现数据可视化](https://github.com/jiangwenjing/Blog/issues/1)
 
